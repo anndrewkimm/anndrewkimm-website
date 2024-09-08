@@ -4,10 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Andrew Kim - CS Major Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
       /* General styling for the entire body */
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Roboto', sans-serif;
         background: linear-gradient(
           135deg,
           #000428,
@@ -42,8 +43,11 @@
       /* Section content */
       section {
         max-width: 800px;
-        margin: 0 auto 30px auto;
-        padding: 0 20px;
+        margin: 20px auto;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
       section p {
@@ -61,27 +65,37 @@
         border-radius: 5px;
         display: inline-block;
         font-size: 1.1em;
-        transition: background-color 0.3s ease, transform 0.3s ease;
+        transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
       .links a:hover {
         background-color: #005bb5;
         transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
       }
 
       .links a:active {
         transform: translateY(0);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
       /* Footer styling */
       footer {
         margin-top: 20px;
+        display: flex;
+        justify-content: center;
       }
 
       footer p {
         font-size: 1em;
         color: #ddd;
         margin: 10px 0;
+      }
+
+      /* Smooth scrolling */
+      html {
+        scroll-behavior: smooth;
       }
     </style>
   </head>

@@ -1,117 +1,136 @@
-/* General styling for the entire body */
+:root {
+  --primary-color: #2563eb;
+  --background-color: #f8fafc;
+  --text-color: #1e293b;
+  --secondary-color: #64748b;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    font-family: "Roboto", sans-serif;
-    background: linear-gradient(135deg, #1e2a78, #0066cc); /* Updated gradient */
-    color: #fff;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100vh;
-    overflow: hidden; /* Prevent scrollbars */
-  }
-  
-  /* Header styling */
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+header {
+  background: linear-gradient(135deg, var(--primary-color), #1d4ed8);
+  color: white;
+  padding: 6rem 2rem;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.section {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.intro {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.links a {
+  color: var(--primary-color);
+  text-decoration: none;
+  padding: 0.5rem 1.5rem;
+  border: 2px solid var(--primary-color);
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+.links a:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.project-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+}
+
+.project-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.skills {
+  text-align: center;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.skill-category {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.skill-category h3 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.skill-list {
+  list-style: none;
+  color: var(--secondary-color);
+}
+
+section h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
   header {
-    margin-bottom: 30px;
-    position: relative; /* For positioning background */
+    padding: 4rem 1rem;
   }
   
   header h1 {
-    font-size: 3em;
-    margin: 0;
-    font-weight: 700;
-    color: #ffffff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Subtle text shadow */
-    animation: headerFadeIn 1s ease-out;
+    font-size: 2.5rem;
   }
   
-  header p {
-    font-size: 1.2em;
-    color: #f0f0f0;
-  }
-  
-  /* Intro section styling */
-  .intro {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.2); /* Slightly more opaque background */
-    border-radius: 10px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-    animation: fadeIn 1s ease-in-out;
-  }
-  
-  .intro p {
-    font-size: 1.3em;
-    line-height: 1.6;
-  }
-  
-  /* Link buttons */
-  .links a {
-    text-decoration: none;
-    margin: 10px;
-    padding: 12px 24px;
-    background-color: #004e92;
-    color: #fff;
-    border-radius: 5px;
-    display: inline-block;
-    font-size: 1.2em;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  }
-  
-  .links a:hover {
-    background-color: #003d80;
-    transform: scale(1.05); /* Slightly enlarge the button */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-  }
-  
-  .links a:active {
-    transform: scale(1); /* Return to normal size */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  }
-  
-  /* Smooth scrolling */
-  html {
-    scroll-behavior: smooth;
-  }
-  
-  /* Add fade-in effect */
   .section {
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
+    padding: 3rem 1rem;
   }
-  
-  .section.visible {
-    opacity: 1;
-  }
-  
-  /* Header fade-in animation */
-  @keyframes headerFadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* Background animation */
-  @keyframes gradientAnimation {
-    0% { background-position: 0% 0%; }
-    50% { background-position: 100% 100%; }
-    100% { background-position: 0% 0%; }
-  }
-  
-  /* Body background animation */
-  body {
-    background: linear-gradient(135deg, #1e2a78, #0066cc);
-    background-size: 400% 400%;
-    animation: gradientAnimation 15s ease infinite;
-  }
+}
   

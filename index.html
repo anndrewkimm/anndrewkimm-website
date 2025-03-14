@@ -8,84 +8,129 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header>
       <h1>Hi, I'm Andrew Kim</h1>
-      <p>Computer Science Major</p>
+      <p>
+        Currently I am studying Computer Science & Math at California State
+        University. This is my personal portfolio website.
+      </p>
+      <div class="links">
+        <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+        <a href="#projects"><i class="fas fa-project-diagram"></i> Projects</a>
+        <a href="#skills"><i class="fas fa-code"></i> Skills</a>
+      </div>
     </header>
 
-    <section class="intro section">
-      <p>
-        I'm currently pursuing my B.S. in Computer Science at California State
-        University, Fullerton. I'm passionate about software development and
-        creating impactful solutions through code.
-      </p>
+    <section id="contact" class="links section">
+      <h2>Get In Touch</h2>
+      <a
+        href="https://drive.google.com/file/d/1RDAlLF-tyOPdwe8J9U_2H96d6CFsacj_/view?usp=sharing"
+        target="_blank"
+        ><i class="fas fa-file-alt"></i> Resume</a
+      >
+      <a href="https://www.linkedin.com/in/anndrewkimm/" target="_blank"
+        ><i class="fab fa-linkedin"></i> LinkedIn</a
+      >
+      <a href="https://github.com/anndrewkimm" target="_blank"
+        ><i class="fab fa-github"></i> GitHub</a
+      >
+      <a
+        href="mailto:akim9165@gmail.com?subject=Hello from your website&body=Hi Andrew, I found your website and wanted to reach out.%0D%0A%0D%0ARegards,%0D%0A[Your Name]"
+        ><i class="fas fa-envelope"></i> Email Me</a
+      >
     </section>
 
-    <section class="skills section">
-      <h2>Skills & Technologies</h2>
-      <div class="skills-grid">
-        <div class="skill-category">
-          <h3>Languages</h3>
-          <ul class="skill-list">
-            <li>Python</li>
-            <li>JavaScript</li>
-            <li>Java</li>
-            <li>C++</li>
-          </ul>
-        </div>
-        <div class="skill-category">
-          <h3>Web Development</h3>
-          <ul class="skill-list">
-            <li>HTML5</li>
-            <li>CSS3</li>
-            <li>React.js</li>
-            <li>Node.js</li>
-          </ul>
-        </div>
-        <div class="skill-category">
-          <h3>Tools</h3>
-          <ul class="skill-list">
-            <li>Git</li>
-            <li>VS Code</li>
-            <li>GitHub</li>
-            <li>Terminal</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="projects section">
-      <h2>Projects</h2>
+    <section id="projects" class="projects section">
+      <h2>Featured Projects</h2>
       <div class="projects">
         <div class="project-card">
-          <h3>Personal Portfolio Website</h3>
+          <div class="project-image-container">
+            <img
+              src="images/TypingGame.png"
+              alt="Typing Game Screenshot"
+              class="project-image"
+            />
+          </div>
+          <h3><i class="fas fa-globe"></i> Typing Game</h3>
           <p>
-            A responsive portfolio website built with HTML, CSS, and JavaScript
-            to showcase my projects and skills.
+            A typing game inspired by ZType, that tests your typing speed and
+            accuracy. Integrated with Wordnik API to fetch random words. A cool
+            and unique UI/UX with animations and different themes, along with
+            background music and sound effects.
           </p>
-          <p>Technologies: HTML, CSS, JavaScript</p>
+          <p>
+            <i class="fas fa-tags"></i> Technologies: HTML5, CSS3, JavaScript
+          </p>
+          <div class="project-links">
+            <a href="https://github.com/anndrewkimm/Typing" target="_blank">
+              <i class="fab fa-github"></i> View Code
+            </a>
+          </div>
+        </div>
+        <div class="project-card">
+          <img
+            src="images/CoinQuest.png"
+            alt="Typing Game Screenshot"
+            class="project-image"
+          />
+          <h3><i class="fas fa-globe"></i> Coin Quest</h3>
+          <p>
+            Built upon Drew Conley's multiplayer game - Added features such as
+            custom maps, powerups, and a level editor, utilizing Firebase to
+            manage real-time data synchronization between players.
+          </p>
+          <p>
+            <i class="fas fa-tags"></i> Technologies: Java, JavaFX, Socket
+            Programming
+          </p>
+          <div class="project-links">
+            <a href="https://github.com/anndrewkimm/Coin-quest" target="_blank">
+              <i class="fab fa-github"></i> View Code
+            </a>
+          </div>
         </div>
         <!-- Add more project cards as you complete more projects -->
       </div>
     </section>
 
-    <section class="links section">
-      <a
-        href="https://drive.google.com/file/d/14fpMGL9qC7TeHqwQsw28bKqJZPDTa0xN/view?usp=drive_link"
-        target="_blank"
-        >Resume</a
-      >
-      <a href="https://www.linkedin.com/in/anndrewkimm/" target="_blank"
-        >LinkedIn</a
-      >
-      <a href="https://github.com/anndrewkimm" target="_blank">GitHub</a>
-      <a
-        href="mailto:akim9165@gmail.com?subject=Hello from your website&body=Hi Andrew, I found your website and wanted to reach out.%0D%0A%0D%0ARegards,%0D%0A[Your Name]"
-        >Email Me</a
-      >
+    <section id="skills" class="skills section">
+      <h2>Skills & Technologies</h2>
+      <div class="skills-grid">
+        <div class="skill-category">
+          <h3><i class="fas fa-code"></i> Languages</h3>
+          <ul class="skill-list">
+            <li><i class="fab fa-python"></i> Python</li>
+            <li><i class="fab fa-js"></i> JavaScript</li>
+            <li><i class="fab fa-java"></i> Java</li>
+            <li><i class="fas fa-plus"></i> C++</li>
+          </ul>
+        </div>
+        <div class="skill-category">
+          <h3><i class="fas fa-laptop-code"></i> Web Development</h3>
+          <ul class="skill-list">
+            <li><i class="fab fa-html5"></i> HTML5</li>
+            <li><i class="fab fa-css3-alt"></i> CSS3</li>
+            <li><i class="fab fa-react"></i> React.js</li>
+            <li><i class="fab fa-node-js"></i> Node.js</li>
+          </ul>
+        </div>
+        <div class="skill-category">
+          <h3><i class="fas fa-tools"></i> Tools & Platforms</h3>
+          <ul class="skill-list">
+            <li><i class="fab fa-git-alt"></i> Git</li>
+            <li><i class="fas fa-code-branch"></i> GitHub</li>
+            <li><i class="fas fa-terminal"></i> Terminal</li>
+            <li><i class="fas fa-code"></i> VS Code</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <script src="app.js"></script>

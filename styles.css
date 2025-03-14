@@ -1,8 +1,12 @@
 :root {
-  --primary-color: #2563eb;
-  --background-color: #f8fafc;
-  --text-color: #1e293b;
-  --secondary-color: #64748b;
+  --primary-color: #0ea5e9;
+  --gradient-start: #0ea5e9;
+  --gradient-end: #3b82f6;
+  --background-color: #0f172a;
+  --card-background: #1e293b;
+  --text-color: #e2e8f0;
+  --text-muted: #94a3b8;
+  --accent-color: #22d3ee;
 }
 
 * {
@@ -16,29 +20,65 @@ body {
   line-height: 1.6;
   color: var(--text-color);
   background-color: var(--background-color);
+  overflow-x: hidden;
 }
 
 header {
-  background: linear-gradient(135deg, var(--primary-color), #1d4ed8);
-  color: white;
-  padding: 6rem 2rem;
-  text-align: center;
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+  animation: rotate 30s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 header h1 {
-  font-size: 3rem;
+  font-size: 4rem;
   margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(to right, #fff, var(--accent-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+header p {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  position: relative;
+  z-index: 1;
 }
 
 .section {
-  padding: 4rem 2rem;
+  padding: 6rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
 }
 
 .intro {
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .links {
@@ -46,45 +86,88 @@ header h1 {
   justify-content: center;
   gap: 1.5rem;
   flex-wrap: wrap;
+  margin-top: 2rem;
 }
 
 .links a {
-  color: var(--primary-color);
+  color: var(--text-color);
   text-decoration: none;
-  padding: 0.5rem 1.5rem;
-  border: 2px solid var(--primary-color);
-  border-radius: 25px;
+  padding: 0.8rem 2rem;
+  border: 2px solid var(--accent-color);
+  border-radius: 50px;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.links a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: var(--accent-color);
+  transition: all 0.3s ease;
+  z-index: -1;
+}
+
+.links a:hover::before {
+  width: 100%;
 }
 
 .links a:hover {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-.projects {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  padding: 2rem 0;
+  color: var(--background-color);
 }
 
 .project-card {
-  background: white;
-  border-radius: 10px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  background: var(--card-background);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex; /* Use flexbox for side-by-side layout */
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
 }
 
 .project-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  border-color: var(--accent-color);
+}
+
+.project-content {
+  display: flex;
+  flex-direction: row; /* Keep the image and text side by side */
+  align-items: center;
+  gap: 1rem;
+}
+
+.project-image {
+  max-width: 1000px; /* Adjust the image size */
+  height: auto;
+  border-radius: 10px;
+}
+
+.project-details {
+  flex-grow: 1; /* Let text take up remaining space */
 }
 
 .project-card h3 {
-  color: var(--primary-color);
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.project-card p {
+  color: var(--text-muted);
   margin-bottom: 1rem;
 }
+
 
 .skills {
   text-align: center;
@@ -92,32 +175,56 @@ header h1 {
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
 }
 
 .skill-category {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background: var(--card-background);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.skill-category:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-color);
 }
 
 .skill-category h3 {
-  color: var(--primary-color);
-  margin-bottom: 1rem;
+  color: var(--accent-color);
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
 }
 
 .skill-list {
   list-style: none;
-  color: var(--secondary-color);
+  color: var(--text-muted);
+  display: grid;
+  gap: 0.8rem;
+}
+
+.skill-list li {
+  padding: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.skill-list li:hover {
+  color: var(--text-color);
+  transform: translateX(5px);
 }
 
 section h2 {
   text-align: center;
-  margin-bottom: 2rem;
-  color: var(--primary-color);
+  margin-bottom: 3rem;
+  font-size: 2.5rem;
+  background: linear-gradient(to right, var(--accent-color), var(--primary-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 @media (max-width: 768px) {
@@ -126,11 +233,87 @@ section h2 {
   }
   
   header h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
   }
   
   .section {
-    padding: 3rem 1rem;
+    padding: 4rem 1rem;
   }
+  
+  section h2 {
+    font-size: 2rem;
+  }
+}
+
+.project-links {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.project-links a {
+  color: var(--accent-color);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--accent-color);
+  border-radius: 25px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.project-links a:hover {
+  background: var(--accent-color);
+  color: var(--background-color);
+}
+
+.project-card i {
+  margin-right: 0.5rem;
+}
+
+.skill-list i {
+  width: 20px;
+  margin-right: 0.5rem;
+  color: var(--accent-color);
+}
+
+.links i {
+  margin-right: 0.5rem;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Gradient text animation */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+section h2 {
+  background-size: 200% auto;
+  animation: gradient 5s ease infinite;
+}
+
+/* Add hover effect to skill items */
+.skill-list li {
+  display: flex;
+  align-items: center;
+  padding: 0.8rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.skill-list li:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(10px);
+}
+
+/* Add subtle hover effect to section headings */
+section h2:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
 }
   

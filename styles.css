@@ -108,13 +108,47 @@ a {
   text-transform: uppercase;
 }
 
+.eyebrow {
+  width: fit-content;
+  transition: color 180ms ease, letter-spacing 240ms ease, transform 220ms ease;
+}
+
 h1 {
+  width: fit-content;
   margin: 0.08em 0 0.06em;
+  position: relative;
+  isolation: isolate;
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(2.35rem, 7.2vh, 5.4rem);
   font-weight: 400;
   letter-spacing: -0.065em;
   line-height: 0.95;
+  transition: letter-spacing 240ms ease, transform 240ms ease;
+}
+
+h1::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  color: rgba(23, 32, 27, 0.13);
+  opacity: 0;
+  transform: translate(0, 0);
+  transition: opacity 200ms ease, transform 260ms ease;
+}
+
+h1::after {
+  content: "";
+  height: 0.12em;
+  position: absolute;
+  right: 0.01em;
+  bottom: -0.03em;
+  left: 0.01em;
+  z-index: -1;
+  background: var(--acid);
+  transform: scaleX(0) skewX(-18deg);
+  transform-origin: right;
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .about {
@@ -123,6 +157,14 @@ h1 {
   font-size: clamp(0.8rem, 1.15vw, 1.05rem);
   line-height: 1.45;
   overflow-wrap: anywhere;
+}
+
+.about span {
+  background: linear-gradient(var(--acid), var(--acid)) no-repeat left 92% / 0 26%;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-size 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 180ms ease;
 }
 
 .availability {
@@ -178,15 +220,34 @@ h1 {
 }
 
 .section-heading h2 {
+  width: fit-content;
+  position: relative;
+  isolation: isolate;
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(1.2rem, 2.2vw, 1.85rem);
   font-weight: 400;
   letter-spacing: -0.035em;
+  transition: letter-spacing 220ms ease, transform 220ms ease;
+}
+
+.section-heading h2::after {
+  content: "";
+  height: 0.18em;
+  position: absolute;
+  right: 0;
+  bottom: 0.01em;
+  left: 0;
+  z-index: -1;
+  background: var(--acid);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .section-heading p {
   letter-spacing: 0.06em;
   text-transform: none;
+  transition: color 180ms ease, letter-spacing 220ms ease, transform 220ms ease;
 }
 
 .repo-list {
@@ -363,8 +424,59 @@ h1 {
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .eyebrow:hover {
+    color: var(--ink);
+    letter-spacing: 0.17em;
+    transform: translateX(0.18rem);
+  }
+
+  h1:hover {
+    letter-spacing: -0.075em;
+    transform: translate(-0.04em, -0.03em);
+  }
+
+  h1:hover::before {
+    opacity: 1;
+    transform: translate(0.09em, 0.075em);
+  }
+
+  h1:hover::after {
+    transform: scaleX(1) skewX(-18deg);
+    transform-origin: left;
+  }
+
+  .about:hover span {
+    color: var(--ink);
+    background-size: 100% 26%;
+  }
+
+  .section-heading h2:hover {
+    letter-spacing: -0.052em;
+    transform: translateX(0.1rem);
+  }
+
+  .section-heading h2:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .section-heading p:hover {
+    color: var(--ink);
+    letter-spacing: 0.09em;
+    transform: translateX(-0.12rem);
+  }
+
   .repo-list:has(.repo-card:hover) .repo-card:not(:hover) {
     opacity: 0.68;
+  }
+
+  .contact p:hover {
+    color: var(--ink);
+    letter-spacing: 0.17em;
+  }
+
+  .contact nav:has(a:hover) a:not(:hover) {
+    opacity: 0.48;
   }
 }
 
@@ -383,11 +495,21 @@ h1 {
   gap: clamp(1rem, 3vw, 2.5rem);
 }
 
+.contact p {
+  transition: color 180ms ease, letter-spacing 220ms ease;
+}
+
 .contact a {
+  margin: -0.32rem -0.5rem;
+  padding: 0.32rem 0.5rem;
   position: relative;
+  border-radius: 999px;
+  background: linear-gradient(var(--acid), var(--acid)) no-repeat right center / 0 100%;
   font-size: clamp(0.72rem, 0.9vw, 0.85rem);
   font-weight: 700;
   text-decoration: none;
+  transition: background-size 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 180ms ease, transform 180ms ease;
 }
 
 .contact a::after {
@@ -407,6 +529,13 @@ h1 {
 .contact a:focus-visible::after {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+.contact a:hover,
+.contact a:focus-visible {
+  background-position: left center;
+  background-size: 100% 100%;
+  transform: translateY(-0.12rem);
 }
 
 :focus-visible {
@@ -437,7 +566,7 @@ h1 {
 
   .availability,
   .section-heading p,
-  .contact p {
+.contact p {
     display: none;
   }
 

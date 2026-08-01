@@ -104,7 +104,7 @@ if (!reducedMotion.matches && precisePointer.matches) {
   };
 
   scrambleTargets.forEach((target) => {
-    if (target.matches(".repo-title, .availability-label")) {
+    if (target.matches(".repo-title, .availability-label, .monogram-label")) {
       return;
     }
 
@@ -115,6 +115,11 @@ if (!reducedMotion.matches && precisePointer.matches) {
   const availabilityLabel = document.querySelector(".availability-label");
 
   availability?.addEventListener("pointerenter", () => decodeText(availabilityLabel));
+
+  const monogram = document.querySelector(".monogram");
+  const monogramLabel = document.querySelector(".monogram-label");
+
+  monogram?.addEventListener("pointerenter", () => decodeText(monogramLabel));
 
   cards.forEach((card) => {
     const title = card.querySelector(".repo-title");

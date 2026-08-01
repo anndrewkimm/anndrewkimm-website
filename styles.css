@@ -5,10 +5,6 @@
   --muted: #69716c;
   --line: rgba(23, 32, 27, 0.16);
   --acid: #d9ff56;
-  --code-blue: #275dcc;
-  --code-teal: #08745b;
-  --code-coral: #b64a2f;
-  --code-violet: #7046a8;
 }
 
 * {
@@ -198,51 +194,52 @@ h1 {
   height: var(--decode-height);
   display: inline-block;
   overflow: hidden;
-  color: var(--code-blue);
+  color: transparent;
+  background-image: linear-gradient(
+    90deg,
+    #d92f49 0%,
+    #df7028 7.14%,
+    #b58900 14.28%,
+    #16835d 21.42%,
+    #197a9c 28.56%,
+    #365fc4 35.7%,
+    #7443aa 42.84%,
+    #d92f49 50%,
+    #df7028 57.14%,
+    #b58900 64.28%,
+    #16835d 71.42%,
+    #197a9c 78.56%,
+    #365fc4 85.7%,
+    #7443aa 92.84%,
+    #d92f49 100%
+  );
+  background-position: 0 50%;
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: decode-rainbow 700ms linear infinite;
   font-variant-numeric: tabular-nums;
   vertical-align: baseline;
   white-space: nowrap;
 }
 
 .about.scramble-text.is-decoding {
-  color: var(--code-coral);
   white-space: normal;
 }
 
-.monogram.scramble-text.is-decoding {
-  display: grid;
-  place-items: center;
-  color: var(--code-violet);
+.monogram-label.scramble-text.is-decoding {
+  width: 2.4ch;
+  height: 1em;
+  overflow: visible;
+  line-height: 1;
+  text-align: center;
 }
 
-.eyebrow.scramble-text.is-decoding,
-.availability-label.scramble-text.is-decoding,
-.contact > .scramble-text.is-decoding {
-  color: var(--code-teal);
-}
-
-.section-heading h2.scramble-text.is-decoding {
-  color: var(--code-coral);
-}
-
-.section-heading p.scramble-text.is-decoding {
-  color: var(--code-violet);
-}
-
-.repo-list li:nth-child(4n + 1) .scramble-text.is-decoding {
-  color: var(--code-blue);
-}
-
-.repo-list li:nth-child(4n + 2) .scramble-text.is-decoding {
-  color: var(--code-teal);
-}
-
-.repo-list li:nth-child(4n + 3) .scramble-text.is-decoding {
-  color: var(--code-coral);
-}
-
-.repo-list li:nth-child(4n + 4) .scramble-text.is-decoding {
-  color: var(--code-violet);
+@keyframes decode-rainbow {
+  to {
+    background-position: -100% 50%;
+  }
 }
 
 .repo-list {
@@ -599,6 +596,8 @@ h1 {
   *,
   *::before,
   *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }

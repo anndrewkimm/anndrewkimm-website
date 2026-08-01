@@ -6,6 +6,24 @@
   --muted: #9ba1ab;
   --line: rgba(242, 240, 233, 0.16);
   --acid: #d9ff56;
+  --decode-spectrum: linear-gradient(
+    90deg,
+    #ff5b78 0%,
+    #ff9d57 7.14%,
+    #e8c95b 14.28%,
+    #46c98f 21.42%,
+    #45bad7 28.56%,
+    #7595ff 35.7%,
+    #bc7df0 42.84%,
+    #ff5b78 50%,
+    #ff9d57 57.14%,
+    #e8c95b 64.28%,
+    #46c98f 71.42%,
+    #45bad7 78.56%,
+    #7595ff 85.7%,
+    #bc7df0 92.84%,
+    #ff5b78 100%
+  );
 }
 
 * {
@@ -208,24 +226,7 @@ h1 {
   display: inline-block;
   overflow: hidden;
   color: transparent;
-  background-image: linear-gradient(
-    90deg,
-    #ff5b78 0%,
-    #ff9d57 7.14%,
-    #e8c95b 14.28%,
-    #46c98f 21.42%,
-    #45bad7 28.56%,
-    #7595ff 35.7%,
-    #bc7df0 42.84%,
-    #ff5b78 50%,
-    #ff9d57 57.14%,
-    #e8c95b 64.28%,
-    #46c98f 71.42%,
-    #45bad7 78.56%,
-    #7595ff 85.7%,
-    #bc7df0 92.84%,
-    #ff5b78 100%
-  );
+  background-image: var(--decode-spectrum);
   background-position: 0 50%;
   background-size: 200% 100%;
   background-clip: text;
@@ -247,6 +248,32 @@ h1 {
   overflow: visible;
   line-height: 1;
   text-align: center;
+}
+
+.scramble-character {
+  display: inline-block;
+  position: relative;
+}
+
+.scramble-character.is-decoding-character {
+  color: transparent;
+}
+
+.scramble-character.is-decoding-character::after {
+  content: attr(data-glyph);
+  width: max-content;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  color: transparent;
+  background-image: var(--decode-spectrum);
+  background-position: 0 50%;
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: decode-rainbow 700ms linear infinite;
+  transform: translateX(-50%);
 }
 
 @keyframes decode-rainbow {

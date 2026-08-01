@@ -7,6 +7,7 @@ if (!reducedMotion.matches && precisePointer.matches) {
   const scrambleTargets = document.querySelectorAll(".scramble-text");
   const codeGlyphs = "0123456789ABCDEF{}[]<>/\\|*+=-_";
   const activeDecodes = new WeakMap();
+  const activeCharacterDecodes = new WeakMap();
 
   let targetX = 0;
   let targetY = 0;
@@ -103,6 +104,65 @@ if (!reducedMotion.matches && precisePointer.matches) {
     activeDecodes.set(element, window.requestAnimationFrame(renderFrame));
   };
 
+  const decodeCharacter = (character) => {
+    const original = character.dataset.original;
+    const previousFrame = activeCharacterDecodes.get(character);
+
+    if (!/[\p{L}\p{N}]/u.test(original)) {
+      return;
+    }
+
+    if (previousFrame) {
+      window.cancelAnimationFrame(previousFrame);
+    }
+
+    const duration = 320;
+    const startedAt = performance.now();
+    let lastGlyphAt = 0;
+
+    character.classList.add("is-decoding-character");
+
+    const renderFrame = (time) => {
+      if (time - lastGlyphAt > 42) {
+        character.dataset.glyph = codeGlyphs[Math.floor(Math.random() * codeGlyphs.length)];
+        lastGlyphAt = time;
+      }
+
+      if (time - startedAt < duration) {
+        activeCharacterDecodes.set(character, window.requestAnimationFrame(renderFrame));
+        return;
+      }
+
+      character.classList.remove("is-decoding-character");
+      delete character.dataset.glyph;
+      activeCharacterDecodes.delete(character);
+    };
+
+    activeCharacterDecodes.set(character, window.requestAnimationFrame(renderFrame));
+  };
+
+  const prepareCharacterDecode = (element) => {
+    const original = element.textContent.replace(/\s+/g, " ").trim();
+    const fragment = document.createDocumentFragment();
+
+    [...original].forEach((value) => {
+      const character = document.createElement("span");
+      character.className = "scramble-character";
+      character.dataset.original = value;
+      character.textContent = value === " " ? "\u00a0" : value;
+      fragment.append(character);
+    });
+
+    element.replaceChildren(fragment);
+    element.addEventListener("pointerover", (event) => {
+      const character = event.target.closest(".scramble-character");
+
+      if (character?.parentElement === element) {
+        decodeCharacter(character);
+      }
+    });
+  };
+
   scrambleTargets.forEach((target) => {
     if (target.matches(".repo-title, .availability-label, .monogram-label")) {
       return;
@@ -121,10 +181,9 @@ if (!reducedMotion.matches && precisePointer.matches) {
 
   monogram?.addEventListener("pointerenter", () => decodeText(monogramLabel));
 
-  cards.forEach((card) => {
-    const title = card.querySelector(".repo-title");
+  document.querySelectorAll(".repo-title").forEach(prepareCharacterDecode);
 
-    card.addEventListener("pointerenter", () => decodeText(title));
+  cards.forEach((card) => {
     card.addEventListener(
       "pointermove",
       (event) => {

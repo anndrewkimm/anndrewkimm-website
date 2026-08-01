@@ -3,7 +3,6 @@ const precisePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 
 if (!reducedMotion.matches && precisePointer.matches) {
   const root = document.documentElement;
-  const cards = document.querySelectorAll(".repo-card");
   const wordTargets = document.querySelectorAll(".word-decode");
   const codeGlyphs = "0123456789ABCDEF{}[]<>/\\|*+=-_";
   const activeWordDecodes = new WeakMap();
@@ -123,19 +122,4 @@ if (!reducedMotion.matches && precisePointer.matches) {
   };
 
   wordTargets.forEach(prepareWordDecode);
-
-  cards.forEach((card) => {
-    card.addEventListener(
-      "pointermove",
-      (event) => {
-        const bounds = card.getBoundingClientRect();
-        const x = ((event.clientX - bounds.left) / bounds.width) * 100;
-        const y = ((event.clientY - bounds.top) / bounds.height) * 100;
-
-        card.style.setProperty("--card-x", `${x.toFixed(1)}%`);
-        card.style.setProperty("--card-y", `${y.toFixed(1)}%`);
-      },
-      { passive: true },
-    );
-  });
 }

@@ -4,10 +4,9 @@ const precisePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 if (!reducedMotion.matches && precisePointer.matches) {
   const root = document.documentElement;
   const cards = document.querySelectorAll(".repo-card");
-  const scrambleTargets = document.querySelectorAll(".scramble-text");
+  const wordTargets = document.querySelectorAll(".word-decode");
   const codeGlyphs = "0123456789ABCDEF{}[]<>/\\|*+=-_";
-  const activeDecodes = new WeakMap();
-  const activeCharacterDecodes = new WeakMap();
+  const activeWordDecodes = new WeakMap();
 
   let targetX = 0;
   let targetY = 0;
@@ -51,35 +50,26 @@ if (!reducedMotion.matches && precisePointer.matches) {
     queueGlowFrame();
   });
 
-  const decodeText = (element) => {
-    const original =
-      element.dataset.scrambleOriginal ?? element.textContent.replace(/\s+/g, " ").trim();
-    const previousFrame = activeDecodes.get(element);
-    const bounds = element.getBoundingClientRect();
+  const decodeWord = (word) => {
+    const original = word.dataset.original;
+    const previousFrame = activeWordDecodes.get(word);
 
     if (previousFrame) {
       window.cancelAnimationFrame(previousFrame);
     }
 
-    element.dataset.scrambleOriginal = original;
-    if (!element.hasAttribute("aria-label")) {
-      element.setAttribute("aria-label", original);
-    }
-
-    element.style.setProperty("--decode-width", `${bounds.width.toFixed(2)}px`);
-    element.style.setProperty("--decode-height", `${bounds.height.toFixed(2)}px`);
-    element.classList.add("is-decoding");
-
     const characters = [...original];
-    const duration = Math.min(760, Math.max(360, 260 + characters.length * 6));
+    const duration = Math.min(560, Math.max(360, 280 + characters.length * 18));
     const startedAt = performance.now();
+
+    word.classList.add("is-decoding-word");
 
     const renderFrame = (time) => {
       const progress = Math.min((time - startedAt) / duration, 1);
-      const revealProgress = Math.max(0, (progress - 0.16) / 0.84);
+      const revealProgress = Math.max(0, (progress - 0.14) / 0.86);
       const revealedCharacters = Math.floor(revealProgress * characters.length);
 
-      element.textContent = characters
+      word.dataset.glyphs = characters
         .map((character, index) => {
           if (!/[\p{L}\p{N}]/u.test(character) || index < revealedCharacters) {
             return character;
@@ -90,98 +80,49 @@ if (!reducedMotion.matches && precisePointer.matches) {
         .join("");
 
       if (progress < 1) {
-        activeDecodes.set(element, window.requestAnimationFrame(renderFrame));
+        activeWordDecodes.set(word, window.requestAnimationFrame(renderFrame));
         return;
       }
 
-      element.textContent = original;
-      element.classList.remove("is-decoding");
-      element.style.removeProperty("--decode-width");
-      element.style.removeProperty("--decode-height");
-      activeDecodes.delete(element);
+      word.classList.remove("is-decoding-word");
+      delete word.dataset.glyphs;
+      activeWordDecodes.delete(word);
     };
 
-    activeDecodes.set(element, window.requestAnimationFrame(renderFrame));
+    activeWordDecodes.set(word, window.requestAnimationFrame(renderFrame));
   };
 
-  const decodeCharacter = (character) => {
-    const original = character.dataset.original;
-    const previousFrame = activeCharacterDecodes.get(character);
-
-    if (!/[\p{L}\p{N}]/u.test(original)) {
-      return;
-    }
-
-    if (previousFrame) {
-      window.cancelAnimationFrame(previousFrame);
-    }
-
-    const duration = 320;
-    const startedAt = performance.now();
-    let lastGlyphAt = 0;
-
-    character.classList.add("is-decoding-character");
-
-    const renderFrame = (time) => {
-      if (time - lastGlyphAt > 42) {
-        character.dataset.glyph = codeGlyphs[Math.floor(Math.random() * codeGlyphs.length)];
-        lastGlyphAt = time;
-      }
-
-      if (time - startedAt < duration) {
-        activeCharacterDecodes.set(character, window.requestAnimationFrame(renderFrame));
-        return;
-      }
-
-      character.classList.remove("is-decoding-character");
-      delete character.dataset.glyph;
-      activeCharacterDecodes.delete(character);
-    };
-
-    activeCharacterDecodes.set(character, window.requestAnimationFrame(renderFrame));
-  };
-
-  const prepareCharacterDecode = (element) => {
+  const prepareWordDecode = (element) => {
     const original = element.textContent.replace(/\s+/g, " ").trim();
     const fragment = document.createDocumentFragment();
 
-    [...original].forEach((value) => {
-      const character = document.createElement("span");
-      character.className = "scramble-character";
-      character.dataset.original = value;
-      character.textContent = value === " " ? "\u00a0" : value;
-      fragment.append(character);
+    original.split(/(\s+)/).forEach((value) => {
+      if (!value) {
+        return;
+      }
+
+      if (/\s+/.test(value)) {
+        fragment.append(document.createTextNode(" "));
+        return;
+      }
+
+      if (!/[\p{L}\p{N}]/u.test(value)) {
+        fragment.append(document.createTextNode(value));
+        return;
+      }
+
+      const word = document.createElement("span");
+      word.className = "scramble-word";
+      word.dataset.original = value;
+      word.textContent = value;
+      word.addEventListener("pointerenter", () => decodeWord(word));
+      fragment.append(word);
     });
 
     element.replaceChildren(fragment);
-    element.addEventListener("pointerover", (event) => {
-      const character = event.target.closest(".scramble-character");
-
-      if (character?.parentElement === element) {
-        decodeCharacter(character);
-      }
-    });
   };
 
-  scrambleTargets.forEach((target) => {
-    if (target.matches(".repo-title, .availability-label, .monogram-label")) {
-      return;
-    }
-
-    target.addEventListener("pointerenter", () => decodeText(target));
-  });
-
-  const availability = document.querySelector(".availability");
-  const availabilityLabel = document.querySelector(".availability-label");
-
-  availability?.addEventListener("pointerenter", () => decodeText(availabilityLabel));
-
-  const monogram = document.querySelector(".monogram");
-  const monogramLabel = document.querySelector(".monogram-label");
-
-  monogram?.addEventListener("pointerenter", () => decodeText(monogramLabel));
-
-  document.querySelectorAll(".repo-title").forEach(prepareCharacterDecode);
+  wordTargets.forEach(prepareWordDecode);
 
   cards.forEach((card) => {
     card.addEventListener(

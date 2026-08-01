@@ -5,6 +5,10 @@
   --muted: #69716c;
   --line: rgba(23, 32, 27, 0.16);
   --acid: #d9ff56;
+  --code-blue: #275dcc;
+  --code-teal: #08745b;
+  --code-coral: #b64a2f;
+  --code-violet: #7046a8;
 }
 
 * {
@@ -194,13 +198,51 @@ h1 {
   height: var(--decode-height);
   display: inline-block;
   overflow: hidden;
+  color: var(--code-blue);
   font-variant-numeric: tabular-nums;
   vertical-align: baseline;
   white-space: nowrap;
 }
 
 .about.scramble-text.is-decoding {
+  color: var(--code-coral);
   white-space: normal;
+}
+
+.monogram.scramble-text.is-decoding {
+  display: grid;
+  place-items: center;
+  color: var(--code-violet);
+}
+
+.eyebrow.scramble-text.is-decoding,
+.availability-label.scramble-text.is-decoding,
+.contact > .scramble-text.is-decoding {
+  color: var(--code-teal);
+}
+
+.section-heading h2.scramble-text.is-decoding {
+  color: var(--code-coral);
+}
+
+.section-heading p.scramble-text.is-decoding {
+  color: var(--code-violet);
+}
+
+.repo-list li:nth-child(4n + 1) .scramble-text.is-decoding {
+  color: var(--code-blue);
+}
+
+.repo-list li:nth-child(4n + 2) .scramble-text.is-decoding {
+  color: var(--code-teal);
+}
+
+.repo-list li:nth-child(4n + 3) .scramble-text.is-decoding {
+  color: var(--code-coral);
+}
+
+.repo-list li:nth-child(4n + 4) .scramble-text.is-decoding {
+  color: var(--code-violet);
 }
 
 .repo-list {
